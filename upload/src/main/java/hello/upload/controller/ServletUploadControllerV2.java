@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StreamUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,6 +59,11 @@ public class ServletUploadControllerV2 {
             log.info("body={}", body);
 
             //Save file
+            if (StringUtils.hasText(part.getSubmittedFileName())) {
+                String fullPath = fileDir + itemName +"_"+part.getSubmittedFileName() ;
+                log.info("Save File fullPath={}", fullPath);
+                part.write(fullPath);
+            }
 
         }
 
